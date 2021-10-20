@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="box">
+        <input type="text" name="email" id="email">
+        <input type="password" name="password" id="pas">
+        <button  id="btn">login</button>
+    </div>
+    <script>
+        const btn = document.getElementById("btn");
+        const fn = async ()=>{
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("pas").value;
+            const payload = {
+                email,
+                password
+            }
+            let res = await fetch("https://reqres.in/api/register",{
+                method: "POST",
+                body: JSON.stringify(payload),
+                headers: {
+                    "Content-type": "application/json"
+                }
+            })
+            let data = await res.json();
+            console.log(data);
+            alert("registration succesfull")
+            const token = data.token;
+            localStorage.setItem("token",token)
+            window.location.replace("login.html");
+        }
+        btn.addEventListener('click',fn)
+    </script>
+</body>
+</html>
